@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+
+	.expense {
+		background: #ffe5e5;
+		border-left: 6px solid #ff4d4d;
+	}
+
+	.income {
+		background: #e6ffed;
+		border-left: 6px solid #2ecc71;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+	<h1 class="text-center">Мои транзакции</h1>
+	<h5 class="text-center">Подытог: {{total}}</h5>
+
+	<div class="card">
+		<b>Сортировка:</b><br>
+		<div class="d-flex gap-2 flex-wrap">
+			<a href="?sort=amount&order=asc{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}"
+				class="btn {% if request.args.get('sort') == 'amount' and request.args.get('order') == 'asc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+				Сумма возрастает
+			</a>
+			<a href="?sort=amount&order=desc{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}"
+				class="btn {% if request.args.get('sort') == 'amount' and request.args.get('order') == 'desc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+				Сумма убывает
+			</a>
+			<a href="?sort=date&order=asc{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}"
+				class="btn {% if request.args.get('sort') == 'date' and request.args.get('order') == 'asc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+				Дата возрастает
+			</a>
+			<a href="?sort=date&order=desc{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}"
+				class="btn {% if request.args.get('sort') == 'date' and request.args.get('order') == 'desc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+				Дата убывает
+			</a>
+		</div>
+
+		<form method="get" class="d-flex flex-column gap-2">
+            <select name="categories" multiple class="form-select" size="5">
+                {% for c in categories %}
+                    <option value="{{ c.id }}"
+                        {% if c.id in selected_categories %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ c.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+			<input type="hidden" name="sort" value="{{ request.args.get('sort', 'date') }}">
+    		<input type="hidden" name="order" value="{{ request.args.get('order', 'desc') }}">
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary">Применить</button>
+                <a href="?sort={{ request.args.get('sort', 'date') }}&order={{ request.args.get('order', 'desc') }}" class="btn btn-secondary">Очистить</a>
+            </div>
+        </form>
+
+	</div>
+
+	<div class="card">
+            <a href="{{ url_for('add_transaction') }}" class="btn">
+                ➕ Добавить транзакцию
+            </a>
+		<a href="{{ url_for('export_csv') }}" class="btn btn-success">
+			Экспорт CSV
+		</a>
+	</div>
+
+	{% if transactions %}
+		{% for t in transactions %}
+			<div class="card {% if t.type == '1' %}expense{% else %}income{% endif %}">
+				{{ t.date.strftime('%d.%m.%Y') }}
+				{% if t.type == '1' %}
+					Трата
+				{% else %}
+					Прибыль
+				{% endif %}
+				<strong>{{ t.amount }}₽</strong>в категории {{t.category.name}}
+				<div style="display: flex; gap: 10px; margin-top: 10px;">
+					<form action="{{ url_for('edit_transaction', transaction_id=t.id) }}" method="post">
+						<button class="btn btn-warning">Изменить</button>
+					</form>
+
+					<form action="{{ url_for('delete_transaction', transaction_id=t.id) }}" method="post">
+						<button class="btn btn-danger">Удалить</button>
+					</form>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="card">
+			<p>Пока нет операций</p>
+		</div>
+	{% endif %}
+
+{% endblock %}
+
+
+
+	

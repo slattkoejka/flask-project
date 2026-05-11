@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+
+	.expense {
+		background: #ffe5e5;
+		border-left: 6px solid #ff4d4d;
+	}
+
+	.income {
+		background: #e6ffed;
+		border-left: 6px solid #2ecc71;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+	<div class="text-center">
+        <h2>Похоже, вы еще не вошли в свой аккаунт</h2>
+
+        <img src="{{ url_for('static', filename='img/not_so_fast.png') }}"
+             class="img-fluid mt-3">
+    </div>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="mt-4">
+
+    {% if current_user.is_authenticated %}
+
+        <div class="card">
+            <h2>Сводка</h2>
+    <!--        <p>Баланс: <b>{{ balance }} ₽</b></p>-->
+            <p>Доходы: {{ income }} ₽</p>
+            <p>Расходы: {{ expense }} ₽</p>
+        </div>
+
+        <div class="card">
+            <h2>Последние операции</h2>
+
+            {% if transactions %}
+                <ul>
+                    {% for t in transactions %}
+                        <li>
+                            {{ t.date.strftime('%d.%m.%Y') }} —
+                            {% if t.type == '0' %}
+                                Трата —
+                            {% else %}
+                                Прибыль —
+                            {% endif %}
+                            {{ t.amount }} ₽ в категории {{t.category.name}}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Пока нет операций</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <a href="{{ url_for('add_transaction') }}" class="btn">
+                ➕ Добавить транзакцию
+            </a>
+        </div>
+
+    {% else %}
+
+        <div class="card">
+            <h2>Контролируй свои финансы просто</h2>
+            <p>
+                Записывай доходы и расходы, следи за балансом
+                и понимай, куда уходят деньги.
+            </p>
+
+            <a href="{{ url_for('register') }}" class="btn">
+                Начать
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Почему это удобно?</h3>
+            <ul>
+                <li>📊 Простая статистика</li>
+                <li>💸 Контроль расходов</li>
+                <li>🎯 Финансовые цели</li>
+            </ul>
+        </div>
+
+    {% endif %}
+</div>
+
+{% endblock %}
+

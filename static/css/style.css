@@ -1,0 +1,109 @@
+```css
+/* Общие настройки */
+body {
+    background: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Контейнер */
+.container {
+    max-width: 900px;
+}
+
+/* Карточки */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Заголовки */
+h1, h2, h3 {
+    font-weight: 600;
+}
+
+/* Список транзакций */
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+
+/* Доход / расход цвета */
+.income {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.expense {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+/* Кнопки */
+.btn {
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+}
+
+/* Зеленая кнопка (основная) */
+.btn-success {
+    background: #4CAF50;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #45a049;
+}
+
+/* Основная синяя */
+.btn-primary {
+    background: #4a90e2;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #357abd;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
+
+/* Отступы */
+.mt-4 {
+    margin-top: 30px !important;
+}
+
+/* Центрирование текста */
+.text-center {
+    text-align: center;
+}
+
+/* Блок приветствия */
+.welcome {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Пустые состояния */
+.empty {
+    color: #888;
+    font-style: italic;
+}
+```

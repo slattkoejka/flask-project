@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+
+	.expense {
+		background: #ffe5e5;
+		border-left: 6px solid #ff4d4d;
+	}
+
+	.income {
+		background: #e6ffed;
+		border-left: 6px solid #2ecc71;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2>Мой аккаунт</h2>
+
+    <p class="mt-3">Имя: {{ current_user.name }}</p>
+
+    <p class="mt-4">Всего потрачено: {{expense}} руб.</p>
+    <p class="mt-4">Всего заработано: {{income}} руб.</p>
+
+    <form action="{{ url_for('logout')}}" method="post">
+						<button class="btn btn-danger">Выйти</button>
+    </form>
+
+</div>
+
+<form action="{{ url_for('upload_avatar') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="mt-3">
+
+    <input type="file"
+           name="avatar"
+           class="form-control">
+
+    <button class="btn btn-primary mt-2">
+        Загрузить аватар
+    </button>
+</form>
+
+{% endblock %}
